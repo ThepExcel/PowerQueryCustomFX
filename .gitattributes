@@ -1,0 +1,17 @@
+# Line endings — pinned in-repo so every machine agrees regardless of its own
+# core.autocrlf. .gitattributes always wins over autocrlf.
+#
+# Added 2026-08-08. Unlike the other repos in the fleet, this was NOT a no-op
+# for history: 5 files were committed as CRLF blobs (ThepGetColumn.pq,
+# ThepMoveColumn.pq, ThepReplaceTextList.pq, ThepSearchColumn.pq, USAGE.md) —
+# they arrived by being moved out of PowerQuery-MCode-Premium (which does pin
+# eol=lf) into this repo while it had no .gitattributes at all, on a Windows
+# machine. Declaring eol=lf without renormalizing would have left the
+# declaration disagreeing with the blobs, so they were renormalized in the
+# same commit. That is why that commit's diff rewrites those 5 files whole.
+* text=auto eol=lf
+
+# Batch files must stay CRLF — cmd.exe misparses LF-only .bat at random
+# offsets. None exist here today; this is a guard for future additions.
+*.bat text eol=crlf
+*.cmd text eol=crlf
